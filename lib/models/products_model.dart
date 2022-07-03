@@ -1,19 +1,44 @@
 class ProductsModel {
-  final int? id;
-  final double? price;
-  final String? description;
-  final String? image;
-  final List<Map<String, dynamic>>? rating;
+  final int id;
+  final String title;
+  final double price;
+  final String description;
+  final String category;
+  final String image;
+  final RatingModel rating;
 
   ProductsModel(
-      {this.id, this.price, this.description, this.image, this.rating});
+      {required this.id,
+      required this.price,
+      required this.description,
+      required this.image,
+      required this.title,
+      required this.category,
+      required this.rating});
+  //this factory constructor for internet
+  factory ProductsModel.fromJson(jsonData) {
+    return ProductsModel(
+      id: jsonData['id'],
+      price: jsonData['price'],
+      description: jsonData['description'],
+      image: jsonData['image'],
+      title: jsonData['title'],
+      category: jsonData['category'],
+      rating: RatingModel.fromJson(jsonData['rating'],)
+    );
+  }
 }
-//  "id": 1,
-//         "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-//         "price": 109.95,
-//         "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-//         "category": "men's clothing",
-//         "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         "rating": {
-//             "rate": 3.9,
-//             "count": 120
+
+class RatingModel {
+  final double rate;
+  final int count;
+  RatingModel({required this.rate, required this.count});
+
+  //factory model for internet
+  factory RatingModel.fromJson(jsonData) {
+    return RatingModel(
+      rate: jsonData['rate'],
+      count: jsonData['count'],
+    );
+  }
+}
