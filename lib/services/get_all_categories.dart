@@ -7,9 +7,13 @@ class GetAllCategories {
   Future<List<dynamic>> getAllCategories() async {
     http.Response response =
         await http.get(Uri.parse(baseUrl + productsUrl + categoriesUrl));
-    List<dynamic> data = jsonDecode(response.body);
-
-    return data;
+    if (response.statusCode==200) {
+  List<dynamic> data = jsonDecode(response.body);
+  
+  return data;
+}else {
+  throw Exception('there was an error on your code ${response.statusCode}');
+}
   }
 }
 //products

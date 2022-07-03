@@ -12,16 +12,20 @@ class GetAllProductsService {
     http.Response response = await http.get(
       Uri.parse(baseUrl + productsUrl),
     );
-    List<dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
 
-    List<ProductsModel> productModelList = [];
+      List<ProductsModel> productModelList = [];
 
-    for (int i = 0; i < data.length; i++) {
-      productModelList.add(
-        ProductsModel.fromJson(data[i]),
-      );
+      for (int i = 0; i < data.length; i++) {
+        productModelList.add(
+          ProductsModel.fromJson(data[i]),
+        );
+      }
+      return productModelList;
+    } else {
+      throw Exception('there was an error on your code ${response.statusCode}');
     }
-    return productModelList;
   }
   //in this step you will decode the data and make the list of dynamic
 

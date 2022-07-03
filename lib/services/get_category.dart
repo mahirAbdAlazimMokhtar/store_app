@@ -10,12 +10,16 @@ class CategoriesService {
     http.Response response = await http
         .get(Uri.parse(baseUrl + productsUrl + categoriesUrl + categoryName));
 
-    List<dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
 
-    List<ProductsModel> productsModelList = [];
-    for (int i = 0; i < data.length; i++) {
-      productsModelList.add(ProductsModel.fromJson(data[i]));
+      List<ProductsModel> productsModelList = [];
+      for (int i = 0; i < data.length; i++) {
+        productsModelList.add(ProductsModel.fromJson(data[i]));
+      }
+      return productsModelList;
+    } else {
+      throw Exception('there was an error in code ${response.statusCode}');
     }
-    return productsModelList;
   }
 }
